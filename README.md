@@ -1,6 +1,14 @@
 # Object-detection-models-comparison
 A comparison of CenterNet and other State-of-the-art models in object detection
 
+# TODO:
+- [ ] Test and visualize the detection results on the testing youtube videos.
+- [ ] Calculate the model complexity using FLOPS on ResNet (18 - 101), HourGlass-104 and DLA-34 architectures.
+- [ ] Comparison with YoloV3:
+	- [ ] Compare the FPS rate of CenterNet vs YoloV3 on given videos.
+	- [ ] Visualize the Precision-Recall curve on a vehicle dataset for both models.
+	- [ ] Plot the ROC curves for both models.
+- [ ] Read paper reviews and discuss limitations and possible improvements for CenterNet.
 
 # REFERENCES:
 - GluonCV: Testing pre-trained CenterNet models : [Link](https://cv.gluon.ai/build/examples_detection/demo_center_net.html)
