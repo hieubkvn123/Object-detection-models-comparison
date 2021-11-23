@@ -15,3 +15,4 @@ A comparison of CenterNet and other State-of-the-art models in object detection
 - GluonCV: Testing pre-trained YoloV3 models : [Link](https://cv.gluon.ai/build/examples_detection/train_yolo_v3.html)
 - GluonCV: Model zoo : [Link](https://cv.gluon.ai/model_zoo/detection.html#centernet)
 - CenterNet Paper - Objects as Points : [Link](https://arxiv.org/abs/1904.07850)
+- Vehicle dataset for validation : [Link](https://drive.google.com/drive/folders/1a-v4os2Ekr-IezLE-pGNJ7R0plZyf6bE)
