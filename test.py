@@ -21,6 +21,11 @@ models = {
 if(args['model'] not in models.keys()):
     raise Exception('Invalid model name')
 
+preprocess_func = data.transforms.presets.center_net.transform_test
+if(args['model'] == 'yolo'):
+    preprocess_func = data.transforms.presets.yolo.transform_test
+
+
 net = model_zoo.get_model(models[args['model']], pretrained=True)
 
 img = cv2.imread(args['input'])
@@ -29,7 +34,7 @@ H, W, C = img.shape
 start = time.time()
 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 x = mx.nd.array(img.reshape(H, W, C))
-x, img = data.transforms.presets.center_net.transform_test(x, short=512)
+x, img = preprocess_func(x, short=512)
 class_IDS, scores, bounding_boxes = net(x)
 end = time.time()
 
