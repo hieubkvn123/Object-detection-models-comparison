@@ -1,6 +1,14 @@
 # Object-detection-models-comparison
 A comparison of CenterNet and other State-of-the-art models in object detection
 
+### 1. Download videos.
+To download testing videos, go to videos folder and run the download.sh script.
+Videos will be downloaded one by one.
+```
+cd videos
+sh download.sh
+```
+
 # TODO:
 - [ ] Test and visualize the detection results on the testing youtube videos.
 - [ ] Calculate the model complexity using FLOPS on ResNet (18 - 101), HourGlass-104 and DLA-34 architectures.
