@@ -41,4 +41,5 @@ end = time.time()
 print(f'[INFO] FPS = {1/(end-start)}') 
 
 ax = utils.viz.plot_bbox(img, bounding_boxes[0], scores[0], class_IDS[0], class_names=net.classes)
+
 plt.show()
