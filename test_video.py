@@ -14,6 +14,7 @@ parser.add_argument('--model', required=False, default='center', help='Detection
 parser.add_argument('--output', required=False, default='videos/output.avi', help='Path to output video')
 args = vars(parser.parse_args())
 
+# List of models for detection
 models = {
     'center' : 'center_net_resnet101_v1b_dcnv2_coco',
     'yolo' : 'yolo3_darknet53_coco'
@@ -30,70 +31,50 @@ if(args['model'] == 'yolo'):
 # Initialize the model
 net = model_zoo.get_model(models[args['model']], pretrained=True)
 
-def numpy_to_mx(img, model='center'):
-    global preprocess_func
+# Initialize video reader
+in_stream = cv2.VideoCapture(args['input'])
+frame_width = int(in_stream.get(cv2.CAP_PROP_FRAME_WIDTH)) 
+frame_height = int(in_stream.get(cv2.CAP_PROP_FRAME_HEIGHT))
+print(f'[INFO] Frame width = {frame_width}, Frame height = {frame_height}')
 
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    H, W, C = img.shape
-
-    x = mx.nd.array(img.reshape(H, W, C))
-    x, img = preprocess_func(x, short=512)
-
-    return x
-
-vs = WebcamVideoStream(src=args['input']).start()
+# Initialize video writer
+out_stream = cv2.VideoWriter(args['output'], cv2.VideoWriter_fourcc(*"XVID"), 1, 
+                      (frame_width,frame_height))
 time.sleep(2.0)
-frame_info = []
 
-print('[INFO] Running frame-by-frame prediction')
+# Start the loop
+print('[INFO] Running frame-by-frame prediction and writing result ... ')
 while(True):
     try:
-        frame = vs.read()
-        if(frame is None): break
+        # 1. Load frames from the camera
+        ret, frame = in_stream.read()
+        if(not ret): 
+            break
 
-        x = numpy_to_mx(frame, model = args['model'])
-        class_IDS, scores, bounding_boxes = net(x)
-        frame_info.append((frame, class_IDS, scores, bounding_boxes))
+        # 2. Image preprocessing
+        frame = mx.nd.array(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)).astype('uint8')
+        rgb_nd, frame = preprocess_func(frame, short=512, max_size=700)
+        
+        # 3. Run inference on current frame
+        class_IDS, scores, bounding_boxes = net(rgb_nd)
+
+        # 4. Plot the bounding boxes
+        frame = utils.viz.cv_plot_bbox(frame, bounding_boxes[0], scores[0], class_IDS[0], class_names=net.classes)
+        
+        # 5. Write the resulted frame to video
+        out_stream.write(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
+
+        # 6. Plot the frame with the bounding boxes
+        utils.viz.cv_plot_image(frame)
+
+        key = cv2.waitKey(1)
+        if(key == ord('q')): 
+            break
     except:
         traceback.print_exc(file=sys.stdout)
         break
 
-vs.stop()
+in_stream.release()
+out_stream.release()
 cv2.destroyAllWindows()
 
-print('[INFO] Writing results ...')
-
-# Input stream
-vs = cv2.VideoCapture(args['input']) 
-
-# Output stream
-frame_width = int(vs.get(3))
-frame_height = int(vs.get(4))
-frame_size = (frame_width,frame_height)
-fps = 20
-writer = cv2.VideoWriter('videos/output.avi', cv2.VideoWriter_fourcc('M','J','P','G'), fps, frame_size)
-
-with tqdm.tqdm(total=len(frame_info)) as pbar:
-    for i in range(len(frame_info)):
-        try:
-            # ret, frame = vs.read()
-
-            frame, class_IDS, scores, bboxes = frame_info[i]
-            class_IDS, scores, bboxes = class_IDS.asnumpy(), scores.asnumpy(), bboxes.asnumpy()
-
-            class_IDS = class_IDS[scores >= 0.6]
-            bboxes = bboxes[scores >= 0.6].astype('int')
-
-            for (x1, y1, x2, y2) in bboxes:
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 1)
-
-            writer.write(frame)
-
-            pbar.update(1)
-        except:
-            traceback.print_exc(file=sys.stdout)
-            break
-
-writer.release()
-vs.release()
-cv2.destroyAllWindows()
