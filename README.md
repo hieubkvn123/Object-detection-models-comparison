@@ -10,7 +10,7 @@ sh download.sh
 ```
 
 # TODO:
-- [ ] Test and visualize the detection results on the testing youtube videos.
+- [x] Test and visualize the detection results on the testing youtube videos.
 - [ ] Calculate the model complexity using FLOPS on ResNet (18 - 101), HourGlass-104 and DLA-34 architectures.
 - [ ] Comparison with YoloV3:
 	- [ ] Compare the FPS rate of CenterNet vs YoloV3 on given videos.
