@@ -25,3 +25,4 @@ sh download.sh
 - CenterNet Paper - Objects as Points : [Link](https://arxiv.org/abs/1904.07850)
 - Vehicle dataset for validation : [Link](https://drive.google.com/drive/folders/1a-v4os2Ekr-IezLE-pGNJ7R0plZyf6bE)
 - Precision-recall curve for object detection : [Link](https://gist.github.com/tarlen5/008809c3decf19313de216b9208f3734)
+- How to interpret a precision-recall curve : [Link](https://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html)
