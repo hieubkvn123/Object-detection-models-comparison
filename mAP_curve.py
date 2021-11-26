@@ -278,7 +278,7 @@ if __name__ == "__main__":
     class_names = ['car', 'motorcycle', 'truck', 'bus', 'bicycle']
     for class_name in class_names:
         gt_boxes = all_gt_boxes[class_name]
-        pred_boxes = all_pred_boxes[class_names]
+        pred_boxes = all_pred_boxes[class_name]
 
         # Precision and recall for the pre-defined IOU threshold
         data = get_avg_precision_at_iou(gt_boxes, pred_boxes, iou_thr=args['iou'])
