@@ -49,6 +49,21 @@ python3 test_video.py --model yolo --input videos/video_1.mp4 --output videos/ou
 </tr>
 </table>
 
+<br/>
+
+<table>
+<tr>
+<th>Video #1 - CenterNet</th>
+<th>Video #2 - CenterNet</th>
+<th>Video #3 - CenterNet</th>
+</tr>
+<tr>
+<td><img src="./media/center_output_1.gif"/></td>		
+<td><img src="./media/center_output_2.gif"/></td>		
+<td><img src="./media/center_output_3.gif"/></td>		
+</tr>
+</table>
+
 # TODO:
 - [x] Test and visualize the detection results on the testing youtube videos.
 - [ ] Calculate the model complexity using FLOPS on ResNet (18 - 101), HourGlass-104 and DLA-34 architectures.
