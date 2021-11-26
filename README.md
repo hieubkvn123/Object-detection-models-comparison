@@ -38,7 +38,14 @@ python3 test_video.py --model yolo --input videos/video_1.mp4 --output videos/ou
 #### Sample predictions:
 <table>
 <tr>
-<td><img src="./media/output_1.gif"/></td>		
+<th>Video #1 - Yolo</th>
+<th>Video #2 - Yolo</th>
+<th>Video #3 - Yolo</th>
+</tr>
+<tr>
+<td><img src="./media/yolo_output_1.gif"/></td>		
+<td><img src="./media/yolo_output_2.gif"/></td>		
+<td><img src="./media/yolo_output_3.gif"/></td>		
 </tr>
 </table>
 
