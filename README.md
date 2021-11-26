@@ -28,6 +28,20 @@ Where :
 - model_name : Is the name of the model you want to test ("yolo" or "center").
 - input : Path to the video file.
 
+The script will output the prediction in the form of gif into the default path "videos/output.gif".
+However, you can change this by providing the script with another option "--output" which specifies
+the output GIF path. For example :
+```
+python3 test_video.py --model yolo --input videos/video_1.mp4 --output videos/output_1.gif
+```
+
+#### Sample predictions:
+<table>
+<tr>
+<td><img src="./media/output_1.gif"/></td>		
+</tr>
+</table>
+
 # TODO:
 - [x] Test and visualize the detection results on the testing youtube videos.
 - [ ] Calculate the model complexity using FLOPS on ResNet (18 - 101), HourGlass-104 and DLA-34 architectures.

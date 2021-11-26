@@ -13,7 +13,7 @@ parser = ArgumentParser()
 parser.add_argument('--input', required=True, help='Path to input test video')
 parser.add_argument('--model', required=False, default='center', help='Detection model used')
 parser.add_argument('--output', required=False, default='videos/output.gif', help='Path to output video')
-parser.add_argument('--frames', required=False, default=200, help='Max number of frames to write')
+parser.add_argument('--frames', required=False, default=50, help='Max number of frames to write')
 parser.add_argument('--display', required=False, type=bool, default=False, help='Wether to display predicted video or not')
 args = vars(parser.parse_args())
 
@@ -46,9 +46,14 @@ time.sleep(2.0)
 print('[INFO] Running frame-by-frame prediction and writing result ... ')
 
 frames = []
-with tqdm.tqdm(total=None) as pbar:
+frame_count = 0
+with tqdm.tqdm(total=args['frames']) as pbar:
     while(True):
         try:
+            frame_count += 1
+            if(frame_count > args['frames']):
+                break
+
             # 1. Load frames from the camera
             ret, frame = in_stream.read()
             if(not ret): 
