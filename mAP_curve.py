@@ -284,6 +284,7 @@ if __name__ == "__main__":
         data = get_avg_precision_at_iou(gt_boxes, pred_boxes, iou_thr=args['iou'])
         precisions = data['precisions']
         recalls = data['recalls']
+        print(precisions, recalls)
         ax = plot_pr_curve(precisions, recalls, label='IOU={:.2f}'.format(args['iou']))
 
         for xval in np.linspace(0.0, 1.0, 11):
