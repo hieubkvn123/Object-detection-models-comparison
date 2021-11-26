@@ -9,6 +9,25 @@ cd videos
 sh download.sh
 ```
 
+### 2. Test model on individual image.
+To test the detection models (yolo and centernet) on an individual image, execute the command:
+```
+python3 test.py --model <model_name> --input <path_to_image>
+```
+
+Where :
+- model_name : Is the name of the model you want to test ("yolo" or "center").
+- input : Path to the image file.
+
+### 3. Test model on video.
+To test the detection models (yolo and centernet) on a video, execute the command:
+```
+python3 test_video.py --model <model_name> --input <path_to_video>
+```
+Where :
+- model_name : Is the name of the model you want to test ("yolo" or "center").
+- input : Path to the video file.
+
 # TODO:
 - [x] Test and visualize the detection results on the testing youtube videos.
 - [ ] Calculate the model complexity using FLOPS on ResNet (18 - 101), HourGlass-104 and DLA-34 architectures.

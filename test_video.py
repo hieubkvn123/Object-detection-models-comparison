@@ -37,9 +37,6 @@ frame_width = int(in_stream.get(cv2.CAP_PROP_FRAME_WIDTH))
 frame_height = int(in_stream.get(cv2.CAP_PROP_FRAME_HEIGHT))
 print(f'[INFO] Frame width = {frame_width}, Frame height = {frame_height}')
 
-# Initialize video writer
-out_stream = cv2.VideoWriter(args['output'], cv2.VideoWriter_fourcc(*"XVID"), 1, 
-                      (frame_width,frame_height))
 time.sleep(2.0)
 
 # Start the loop
@@ -60,11 +57,8 @@ while(True):
 
         # 4. Plot the bounding boxes
         frame = utils.viz.cv_plot_bbox(frame, bounding_boxes[0], scores[0], class_IDS[0], class_names=net.classes)
-        
-        # 5. Write the resulted frame to video
-        out_stream.write(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
 
-        # 6. Plot the frame with the bounding boxes
+        # 5. Plot the frame with the bounding boxes
         utils.viz.cv_plot_image(frame)
 
         key = cv2.waitKey(1)
@@ -75,6 +69,5 @@ while(True):
         break
 
 in_stream.release()
-out_stream.release()
 cv2.destroyAllWindows()
 
