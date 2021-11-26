@@ -1,6 +1,7 @@
 import os
 import cv2
 import glob
+import json
 import tqdm
 import time
 import pprint
@@ -51,6 +52,7 @@ with tqdm.tqdm(total=len(img_files)) as pbar:
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             x = mx.nd.array(img.reshape(H, W, C))
             x, img = preprocess_func(x, short=512)
+            H_, W_ = x.shape[-2:] 
             
             # 3. Network inference
             class_IDS, scores, bounding_boxes = net(x)
@@ -61,6 +63,8 @@ with tqdm.tqdm(total=len(img_files)) as pbar:
             # 4. Filter out high-score bounding boxes
             class_IDS = class_IDS[indices]
             bounding_boxes = bounding_boxes[indices]
+            bounding_boxes[:, (0, 2)] *= W/W_
+            bounding_boxes[:, (1, 3)] *= H/H_
             predictions.append((img_file, class_IDS, bounding_boxes, scores[indices]))
 
             pbar.update(1)
@@ -73,21 +77,29 @@ with tqdm.tqdm(total=len(img_files)) as pbar:
 
 
 # Store prediction results in JSON
-for img_file, class_IDS, bboxes, scores in predictions:
-    for class_id, bbox, score in zip(class_IDS, bboxes, scores):
-        print(bbox, score, class_id)
-        class_name = net.classes[int(class_id)].strip().lower()
+print('[INFO] Writing result to JSON ...')
+with tqdm.tqdm(total=len(predictions)) as pbar:
+    for img_file, class_IDS, bboxes, scores in predictions:
+        for class_id, bbox, score in zip(class_IDS, bboxes, scores):
+            class_name = net.classes[int(class_id)].strip().lower()
 
-        if(class_name not in class_names):
-            continue
+            if(class_name not in class_names):
+                continue
 
-        x1, y1, x2, y2 = bbox
-        x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
+            x1, y1, x2, y2 = bbox
+            x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
+            score = np.float64(score)
 
-        if(img_file not in annotations[class_name]):
-            annotations[class_name][img_file] = {"boxes" : [], "scores" : []}
+            if(img_file not in annotations[class_name]):
+                annotations[class_name][img_file] = {"boxes" : [], "scores" : []}
 
-        annotations[class_name][img_file]["boxes"].append([x1, y1, x2, y2])
-        annotations[class_name][img_file]["scores"].append(score)
+            annotations[class_name][img_file]["boxes"].append([x1, y1, x2, y2])
+            annotations[class_name][img_file]["scores"].append(score)
 
-pprint.pprint(annotations)
+        pbar.update(1)
+
+# Save the annotations
+with open(output_file, 'w') as f:
+    json.dump(annotations, f, indent=4)
+
+print(f'[INFO] Annotations written to {output_file}')
