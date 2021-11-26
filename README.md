@@ -64,6 +64,8 @@ python3 test_video.py --model yolo --input videos/video_1.mp4 --output videos/ou
 </tr>
 </table>
 
+### 4. Evaluate on testing image dataset.
+
 # TODO:
 - [x] Test and visualize the detection results on the testing youtube videos.
 - [ ] Calculate the model complexity using FLOPS on ResNet (18 - 101), HourGlass-104 and DLA-34 architectures.
