@@ -13,6 +13,7 @@ parser = ArgumentParser()
 parser.add_argument('--input', required=True, help='Path to input test video')
 parser.add_argument('--model', required=False, default='center', help='Detection model used')
 parser.add_argument('--output', required=False, default='videos/output.gif', help='Path to output video')
+parser.add_argument('--frames', required=False, default=200, help='Max number of frames to write')
 parser.add_argument('--display', required=False, type=bool, default=False, help='Wether to display predicted video or not')
 args = vars(parser.parse_args())
 
