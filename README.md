@@ -112,7 +112,7 @@ an option "--output" to the pr_curve.py script.
 - [ ] Calculate the model complexity using FLOPS on ResNet (18 - 101), HourGlass-104 and DLA-34 architectures.
 - [ ] Comparison with YoloV3:
 	- [ ] Compare the FPS rate of CenterNet vs YoloV3 on given videos.
-	- [ ] Visualize the Precision-Recall curve on a vehicle dataset for both models.
+	- [x] Visualize the Precision-Recall curve on a vehicle dataset for both models.
 	- [ ] Plot the ROC curves for both models.
 - [ ] Read paper reviews and discuss limitations and possible improvements for CenterNet.
 
