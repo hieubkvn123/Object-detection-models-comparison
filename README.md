@@ -188,3 +188,4 @@ Output from the script :
 - Vehicle dataset for validation : [Link](https://public.roboflow.com/object-detection/vehicles-openimages)
 - Precision-recall curve for object detection : [Link](https://gist.github.com/tarlen5/008809c3decf19313de216b9208f3734)
 - How to interpret a precision-recall curve : [Link](https://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html)
+- Original CenterNet Github repository : [Link](https://github.com/xingyizhou/CenterNet)
