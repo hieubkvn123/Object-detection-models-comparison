@@ -172,6 +172,6 @@ Performance metrics comparison summary:
 - GluonCV: Testing pre-trained YoloV3 models : [Link](https://cv.gluon.ai/build/examples_detection/train_yolo_v3.html)
 - GluonCV: Model zoo : [Link](https://cv.gluon.ai/model_zoo/detection.html#centernet)
 - CenterNet Paper - Objects as Points : [Link](https://arxiv.org/abs/1904.07850)
-- Vehicle dataset for validation : [Link](https://drive.google.com/drive/folders/1a-v4os2Ekr-IezLE-pGNJ7R0plZyf6bE)
+- Vehicle dataset for validation : [Link](https://public.roboflow.com/object-detection/vehicles-openimages)
 - Precision-recall curve for object detection : [Link](https://gist.github.com/tarlen5/008809c3decf19313de216b9208f3734)
 - How to interpret a precision-recall curve : [Link](https://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html)
