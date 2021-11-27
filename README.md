@@ -158,9 +158,22 @@ Performance metrics comparison summary:
 </tr>
 </table>
 
+#### Measure network complexity using MACS
+To evaluate the model's complexity, simply run the script "flops.py" (without providing any options).
+The script imported the HourGlass-104, ResNet-18, ResNet-101 and DLA-34 architectures (implemented in PyTorch)
+from the [original CenterNet implementation](https://github.com/xingyizhou/CenterNet). Then, it uses
+ptflops to compute the network size (number of parameters) and complexity (GMacs).
+Output from the script : 
+```
+[INFO] Model name : HourGlass-104, Number of params : 190.18 M, Computational complexity : 275.1 GMac
+[INFO] Model name : DLA-34, Number of params : 18.37 M, Computational complexity : 29.53 GMac
+[INFO] Model name : ResNet-18, Number of params : 15.68 M, Computational complexity : 38.25 GMac
+[INFO] Model name : ResNet-101, Number of params : 53.3 M, Computational complexity : 76.17 GMac
+```
+
 # TODO:
 - [x] Test and visualize the detection results on the testing youtube videos.
-- [ ] Calculate the model complexity using FLOPS on ResNet (18 - 101), HourGlass-104 and DLA-34 architectures.
+- [x] Calculate the model complexity using FLOPS on ResNet (18 - 101), HourGlass-104 and DLA-34 architectures.
 - [x] Comparison with YoloV3:
 	- [x] Compare the FPS rate of CenterNet vs YoloV3 on given videos.
 	- [x] Visualize the Precision-Recall curve on a vehicle dataset for both models.
