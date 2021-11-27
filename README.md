@@ -118,9 +118,9 @@ an option "--output" to the pr_curve.py script.
 </tr>
 <tr>
 <th>CenterNet</th>
-<td>0.39</td>
-<td>0.76</td>
-<td>0.69</td>
+<td><strong>0.39</strong></td>
+<td><strong>0.76</strong></td>
+<td><strong>0.69</strong></td>
 <td>0.46</td>
 </tr>
 <tr>
@@ -128,7 +128,7 @@ an option "--output" to the pr_curve.py script.
 <td>0.30</td>
 <td>0.71</td>
 <td>0.61</td>
-<td>0.50</td>
+<td><strong>0.50</strong></td>
 </tr>
 </table>
 
