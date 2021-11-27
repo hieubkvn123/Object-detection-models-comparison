@@ -1,0 +1,13 @@
+model,video,metric,value
+YoloV3,video_1.mp4,fps,21.49
+YoloV3,video_1.mp4,dr,13.15
+YoloV3,video_2.mp4,fps,20.17
+YoloV3,video_2.mp4,dr,13.31
+YoloV3,video_3.mp4,fps,20.25
+YoloV3,video_3.mp4,dr,5.70
+CenterNet,video_1.mp4,fps,15.16
+CenterNet,video_1.mp4,dr,3.19
+CenterNet,video_2.mp4,fps,14.69
+CenterNet,video_2.mp4,dr,1.99
+CenterNet,video_3.mp4,fps,15.06
+CenterNet,video_3.mp4,dr,2.09

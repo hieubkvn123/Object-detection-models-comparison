@@ -132,11 +132,37 @@ an option "--output" to the pr_curve.py script.
 </tr>
 </table>
 
+### 5. Others
+#### Measure models performance in real-time detection
+To evaluate the performance of CenterNet and YoloV3 in real-time detection, the "measure_performance.py"
+script is written to measure in two metrics : Frames per second (FPS) and Detection rate (Objects per frame).
+To run the script, provide it with the following options:
+```
+python3 measure_performance --model <model_name> --input <path_to_video> --metric <metric_name>
+```
+Where:
+- model_name : Refers to the model name ("center" or "yolo").
+- path_to_video : Refers to path to video input ("videos/...mp4").
+- metric_name : Refers to evaluation metrics ("fps" or "dr").
+
+Performance metrics comparison summary:
+<table>
+<tr>
+<th>FPS</th>
+<th>Detection Rate</th>
+</tr>
+
+<tr>
+<td><img src="./media/fps_yolo_vs_centernet.png"/></td>
+<td><img src="./media/dr_yolo_vs_centernet.png"/></td>
+</tr>
+</table>
+
 # TODO:
 - [x] Test and visualize the detection results on the testing youtube videos.
 - [ ] Calculate the model complexity using FLOPS on ResNet (18 - 101), HourGlass-104 and DLA-34 architectures.
-- [ ] Comparison with YoloV3:
-	- [ ] Compare the FPS rate of CenterNet vs YoloV3 on given videos.
+- [x] Comparison with YoloV3:
+	- [x] Compare the FPS rate of CenterNet vs YoloV3 on given videos.
 	- [x] Visualize the Precision-Recall curve on a vehicle dataset for both models.
 	- [ ] Plot the ROC curves for both models.
 - [ ] Read paper reviews and discuss limitations and possible improvements for CenterNet.
