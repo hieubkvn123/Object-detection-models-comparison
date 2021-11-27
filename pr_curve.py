@@ -297,6 +297,17 @@ if __name__ == "__main__":
         for xval in np.linspace(0.0, 1.0, 11):
             plt.vlines(xval, 0.0, 1.1, color='gray', alpha=0.3, linestyles='dashed')
 
+        # Calculate mAP for different thresholds
+        APs = []
+        for iou_thr in np.arange(0.5, 1.0, 0.05):
+            data = get_avg_precision_at_iou(gt_boxes, pred_boxes, iou_thr=iou_thr)
+            precisions = data['precisions']
+            AP =np.array(precisions).mean()
+            APs.append(AP)
+
+        mAP = np.array(APs).mean()
+        print(f'[INFO] Class_name {class_name}, mAP = {mAP:.2f}')
+
     plt.legend()
     plt.savefig(args['output'])
 

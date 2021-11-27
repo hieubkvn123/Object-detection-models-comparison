@@ -107,6 +107,31 @@ an option "--output" to the pr_curve.py script.
 </tr>
 </table>
 
+#### Mean Average Precision (mAP) by classes
+<table>
+<tr>
+<th>mAP</th>
+<th>Car</th>
+<th>Truck</th>
+<th>Bus</th>
+<th>Motorcycle</th>
+</tr>
+<tr>
+<th>CenterNet</th>
+<td>0.39</td>
+<td>0.76</td>
+<td>0.69</td>
+<td>0.46</td>
+</tr>
+<tr>
+<th>Yolo</th>
+<td>0.30</td>
+<td>0.71</td>
+<td>0.61</td>
+<td>0.50</td>
+</tr>
+</table>
+
 # TODO:
 - [x] Test and visualize the detection results on the testing youtube videos.
 - [ ] Calculate the model complexity using FLOPS on ResNet (18 - 101), HourGlass-104 and DLA-34 architectures.
