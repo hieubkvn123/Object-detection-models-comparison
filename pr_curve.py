@@ -17,13 +17,15 @@ COLORS = [
     '#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c',
     '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5',
     '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f',
-    '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+    '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5'
+]
 
 
 parser = ArgumentParser()
 parser.add_argument('--gt', required=True, type=str, help='Path to ground truth bounding boxes json file')
 parser.add_argument('--pr', required=True, type=str, help='Path to predicted bounding boxes json file')
 parser.add_argument('--iou', required=False, type=float, default=0.6, help='IOU threshold')
+parser.add_argument('--output', required=False, type=str, default='media/PR_curve.png', help='Output path of the PR curve figure')
 args = vars(parser.parse_args())
 
 def calc_iou_individual(pred_box, gt_box):
@@ -206,9 +208,10 @@ def get_avg_precision_at_iou(gt_boxes, pred_boxes, iou_thr=0.5):
     # Loop over model score thresholds and calculate precision, recall
     for ithr, model_score_thr in enumerate(sorted_model_scores[:-1]):
         # On first iteration, define img_results for the first time:
-        img_ids = gt_boxes.keys() if ithr == 0 else model_scores_map[model_score_thr]
+        img_ids = gt_boxes.keys() # if ithr == 0 else model_scores_map[model_score_thr]
         for img_id in img_ids:
             gt_boxes_img = gt_boxes[img_id]
+            if(img_id not in pred_boxes_pruned): continue
             box_scores = pred_boxes_pruned[img_id]['scores']
             start_idx = 0
             for score in box_scores:
@@ -275,8 +278,9 @@ if __name__ == "__main__":
     with open(args['pr']) as infile:
         all_pred_boxes = json.load(infile)
 
-    class_names = ['car', 'motorcycle', 'truck', 'bus', 'bicycle']
-    for class_name in class_names:
+    ax = None
+    class_names = ['car', 'motorcycle', 'truck', 'bus']
+    for i, class_name in enumerate(class_names):
         gt_boxes = all_gt_boxes[class_name]
         pred_boxes = all_pred_boxes[class_name]
 
@@ -284,12 +288,15 @@ if __name__ == "__main__":
         data = get_avg_precision_at_iou(gt_boxes, pred_boxes, iou_thr=args['iou'])
         precisions = data['precisions']
         recalls = data['recalls']
-        print(precisions, recalls)
-        ax = plot_pr_curve(precisions, recalls, label='IOU={:.2f}'.format(args['iou']))
+        
+        if(ax == None):
+            ax = plot_pr_curve(precisions, recalls, label=class_name, color=COLORS[i])
+        else:
+            plot_pr_curve(precisions, recalls, label=class_name, ax=ax, color=COLORS[i])
 
         for xval in np.linspace(0.0, 1.0, 11):
             plt.vlines(xval, 0.0, 1.1, color='gray', alpha=0.3, linestyles='dashed')
 
     plt.legend()
-    plt.show()
+    plt.savefig(args['output'])
 

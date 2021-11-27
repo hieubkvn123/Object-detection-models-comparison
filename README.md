@@ -65,6 +65,47 @@ python3 test_video.py --model yolo --input videos/video_1.mp4 --output videos/ou
 </table>
 
 ### 4. Evaluate on testing image dataset.
+To evaluate on a testing dataset, run the "test_batch.py" script and specify the path to the testing images
+folder along with the model name. For example :
+```
+python3 test_batch.py --input data/images --model yolo
+```
+The results will be output to a json file :  "predictions/pr_{model_name}.json". The format of the json
+file will be as followed:
+```json
+{
+	"<class_name>" : {
+		"<file_name>.jpg" : {
+			"boxes" : [[...]],
+			"scores" : [...]
+		},
+		...
+	},
+	...
+}
+```
+
+The ground truth of the vehicle dataset is stored in the ground truth json file "predictions/gt_vehicle.json".
+To plot the precision-recall curve of the predictions, run the "pr_curve.py" script and specify the JSON
+files to the ground truth and the predictions JSON. For example :
+```
+python3 pr_curve.py --gt predictions/gt_vehicle.json --pr predictions/pr_yolo.json
+```
+
+The figure will be output to a file named "PR_curve.png". However, you can change this behaviour by specifying
+an option "--output" to the pr_curve.py script.
+
+#### Precision and recall curve for YoLo and CenterNet on the same dataset
+<table>
+<tr>
+<th>Yolo</th>
+<th>CenterNet</th>
+</tr>
+<tr>
+<td><img src='media/pr_yolo.png'/></td>
+<td><img src='media/pr_center.png'/></td>
+</tr>
+</table>
 
 # TODO:
 - [x] Test and visualize the detection results on the testing youtube videos.
