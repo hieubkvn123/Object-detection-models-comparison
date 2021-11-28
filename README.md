@@ -178,7 +178,7 @@ Output from the script :
 	- [x] Compare the FPS rate of CenterNet vs YoloV3 on given videos.
 	- [x] Visualize the Precision-Recall curve on a vehicle dataset for both models.
 	- [ ] Plot the ROC curves for both models.
-- [ ] Read paper reviews and discuss limitations and possible improvements for CenterNet.
+- [x] Read paper reviews and discuss limitations and possible improvements for CenterNet.
 
 # REFERENCES:
 - GluonCV: Testing pre-trained CenterNet models : [Link](https://cv.gluon.ai/build/examples_detection/demo_center_net.html)
