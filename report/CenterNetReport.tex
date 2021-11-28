@@ -85,8 +85,22 @@ Where H and W are the dimensions of the original input image, C is the number of
     \caption{Ground-truth center points of different classes splashed onto the heatmap using the Gaussian Kernel}
 \end{figure}
 
+\section*{Model complexity}
+In the original paper, four network architectures are proposed : HourGlass-104, ResNet-18, ResNet-101 and DLA-34. To analyze the complexity of these architectures, I imported the pre-defined networks taken from the official Github repository of CenterNet and used ptflops - a network complexity analysis tool for PyTorch to calculate the model complexity in GMacs.
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c| } 
+\hline
+Architectures & HourGlass-104 & DLA-34 & ResNet-18 & ResNet-101 \\
+\hline
+Number of parameters & 190.18 M & 18.37 M & 15.68 M & 53.3 M \\ 
+Computational complexity & 275.1 GMac & 29.53 GMac & 38.25 GMac & 76.17 GMac \\ 
+\hline
+\end{tabular}
+\end{center}
+
+
 \section*{CenterNet and YoloV3 comparison}
-In order to attain an objective comparison between CenterNet and other state-of-the-art methods, I used the pretrained CenterNet and pretrained YoloV3 models derived from the model zoo of GluonCV, an extended deep learning library for Apache MxNet. Both of the models are trained on the same benchmark which is the COCO open dataset comprises of 80 different classes. The evaluation metrics consist of Frame Per Second (FPS), Detection Rate (Objects per frame), Precision and Recall trade-off and mean Average Precision (mAP).
+In order to attain an objective comparison between CenterNet and other state-of-the-art methods, I used the pretrained CenterNet and pretrained YoloV3 models derived from the model zoo of GluonCV, an extended deep learning library for Apache MxNet. Both of the models are trained on the same benchmark which is the COCO open dataset comprises of 80 different classes. The evaluation metrics consist of Frame Per Second (FPS), Detection Rate (Objects per frame), Precision and Recall trade-off and mean Average Precision (mAP).\newpage
 
 \subsection*{1. Real-time detection performance}
 In the original paper, the authors claimed that the proposed CenterNet acquires real-time detection performance that rivals the contemporary state-of-the-arts like YoloV3, RetinaNet and Faster-RCNN. To verify this, an evaluation script is ran for both YoloV3 and CenterNet on three testing videos. The evaluation metrics are then calculated and visualized.\newline
@@ -155,7 +169,25 @@ As mentioned in the original paper, the evaluation results on the COCO open data
 \subsection*{2. Performance}
 As presented in the comparison between YoloV3 and CenterNet in terms of real-time performance, the novelty of the proposed result is questionable. While the proposed CenterNet did successfully get rid of the hustle from bounding boxes proposal, in inference time, the intermediate operations (Heatmap peaks filtering, dimensions extraction and offset correction) still take up a lot of processing time. This can be a real hindrance in the case where a lot of objects are present in the image. Unlike Yolo where the objectness score, class probabilities and bounding box coordinates are infered in a single-shot detection manner.
 
-\section*{Conclusion}
+\section*{Proposed improvements}
+Through research and experimentation, I hereby proposed the potential methods where CenterNet can be further improved.\newpage
+
+\textbf{Modification in loss function} : The original implementation of CenterNet includes three loss terms in the overall loss formulation corresponding to three output heads : The heatmap loss, the offset loss and the dimension (size) loss :
+
+\begin{align}
+ L_{det} = L_k + \lambda_{off}L_{off} + \lambda_{size}L_{size}
+\end{align}
+
+To overcome the problem of center point collision, I suggest that there should be an additional regularization term in the overall loss formulation that penalize when two peaks in the heatmap are too close to each other.\newline
+
+\textbf{Apply gaussian mixture model} : Another possible way of overcoming center points collision can be, instead of measuring the peaks of the heatmap, we can apply gaussian mixture model to calculate clusters in the heatmap. This way the center points selection process will be more robust to overlapping regions.
+
+\begin{figure}[H]
+    \centering
+    \captionsetup{justification=centering}
+    \includegraphics[scale=0.5]{images/gmm.png}
+    \caption{Gaussian mixture model for higher robustness for overlapping regions in the heatmap}
+\end{figure}
 
 
 \bibliographystyle{agsm} 
